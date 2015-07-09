@@ -1,0 +1,144 @@
+<html>
+	<head>
+		<script src="processing-1.4.1Copy.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+			// a variable to hold the ball
+			var ball;
+			// a variable to hold the paddle
+			var paddle;
+			
+			void setup()
+			{
+			  // create a Ball object
+			  ball =  new Ball(30,[255, 255, 255], 400, 300, 2, 2); // coordinates are (400, 300) because that is right in the center
+			  // create a paddle
+			  paddle = new Paddle(100, 10, [200, 75, 20]);
+			  size(800,600); // size of window
+			  background(17, 9, 89);
+			  fill(255); 
+			}
+
+			// draw function we saw in Khan Academy
+			void draw(){ // void means that the function doesn't return 
+				background(17, 9, 89); // returns the background
+				//1. create the ball
+				ball.drawBall();
+				//2. create the paddle
+				paddle.drawPaddle();
+				//3. move the ball  
+				ball.move();
+			}
+			
+			//ball class
+			class Ball{
+				// attributes, constructor, functions (declare, initialization, execute)
+				// if defining class, use uppercase letter, use lowercase for variable; class is not a function, so you can declare variables inside of it
+				// -------------ATTRIBUTES-------------
+				var size; // size of the ball
+				var r; // red in color of the ball
+				var g; // green in color of the ball
+				var b; // blue in color of the ball
+				var speed(x); // speed of the ball in the x direction
+				var speed(y); // speed of the ball in the y direction
+				var xPosition; // x-coordinate of the ball
+				var yPosition; // y-coordinate of the ball
+				
+				//-------------CONSTRUCTOR-------------
+				// constructor = initializes the attributes/creates variables and sets their values; the constructor has to have the same name as the class and be in the class for it to work
+				Ball(s, c, x, y, xS, yS){ // s = size, c = color, x = x-location, y = y-location, xS = x-speed, yS = y-speed
+					size = s; // setting the size to s
+					// let's assume c (color) is a list (ex(100, 200, 50))
+					r = c[0]; // set red value from color list
+					g = c[1]; // set green value from color list
+					b = c[2]; // set blue value from color list
+					speedX = xS; // set speedX to the x speed
+					speedY = yS; // set speedY to the y speed
+					xPosition = x; // set xPosition to x location
+					yPosition = y; // set yPosition to y location
+				// example call: Ball(10, (100, 200, 50), 0, 0, 20, 20)
+				}
+				// -------------FUNCTIONS-------------
+				// draw the ball -- create a ball
+				void drawBall(){
+					noStroke(); // edges of ball don't show up
+					fill(r, g, b); 
+					ellipse(xPosition, yPosition, size, size);
+				}
+				
+				// move at a certain speed
+				void move(){
+					// get it to move:
+					xPosition = xPosition - speedX;
+					yPosition = yPosition - speedY;
+					
+					// if it is touching a wall					
+					if (xPosition < 0) {
+						speedX = speedX * -1;
+						}
+					else if (xPosition > 800) {
+						speedX = speedX * -1;
+					}
+					// y-coordinate
+					if (yPosition < 0) {
+						speedY = speedY * -1;
+						
+						}
+					else if (yPosition > 600) {
+						// speedY = speedY * -1;
+						stop();
+						println("Game Over");
+					}
+					
+					// if it is touching the paddle (requires another class)
+					if ((xPosition >= paddle.xPos) && (xPosition <= paddle.xPos + (paddle.width))){		
+						// check if y position is touching the paddle
+					if (yPosition >= (paddle.yPos) && yPosition <= (paddle.yPos + (paddle.height))) {
+						speedY = speedY * -1;
+					}
+					}
+					
+				}
+			}
+			
+			//paddle class
+			class Paddle {
+				// attributes, constructor, functions (declare, initialization, execute)
+				
+				// -------------ATTRIBUTES-------------
+				var width; // width of the paddle
+				var height; // height of the paddle
+				var xPos; // x-location of the paddle --> using this because we've already used the variable xPosition (it should be okay because they're in different classes but we want to be careful)
+				var yPos; // y-location of the paddle
+				var red; // red value of paddle color
+				var green; // green value of paddle color
+				var blue; // blue value of paddle color
+				
+				// -------------CONSTRUCTOR-------------
+				// parameters = width, height, and color of the paddle
+				Paddle(w, h, color) {
+					width = w; // setting width of paddle
+					height = h; // setting height of paddle
+					red = color[0]; // set red value from color list --> using "red" and "color" because "r" and "c" were used in the Ball class
+					green = color[1]; // set green value from color list
+					blue = color[2]; // set blue value from color list
+					xPos = mouseX; // x-location depends on mouse location
+					yPos = 500; // y-location at the bottom of the screen
+				}
+				
+				// -------------FUNCTIONS-------------
+				void drawPaddle(){
+					noStroke();
+					fill(red, green, blue); // fill the color of the paddle
+					xPos = mouseX; // allows the paddle to move (redraws the paddle based on your mouse location)
+					rect(xPos, yPos, width, height); // create rectangle shape for paddle
+				}
+				
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>

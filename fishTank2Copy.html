@@ -1,0 +1,152 @@
+<html>
+	<head>
+		<script src="processing-1.4.1Copy.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+			var fish;
+			var fish1;
+			var fish2;
+			var fish3;
+			var fish4;
+			var fish5;
+			var fish6;
+			var fish7;
+			var fish8;
+			var fish9;
+			var rock;
+			var rock1;
+			var rock2;
+			var rock3;
+			var rock4;
+			var rock5;
+			var rock6;
+			var rock7;
+			var rock8;
+			void setup()
+			{
+			  //create a fish object
+			  fish = new Fish(100,50,[153,50,204], 2, 2, 400, 300);
+			  fish1 = new Fish(100,50,[153,50,204], 2.5, 2.5, 500, 200);
+			  fish2 = new Fish(100,50,[153,50,204], 1, 1, 200, 400);
+			  fish3 = new Fish(100,50,[153,50,204], 1.52, 1.52, 100, 600);
+			  fish4 = new Fish(100,50,[153,50,204], 2.5, 2.5, 500, 300);
+			  fish5 = new Fish(100,50,[153,50,204], 2.52, 2.52, 400, 600);
+			  fish6 = new Fish(100,50,[153,50,204], 2.22, 2.22, 700, 200);
+			  fish7 = new Fish(100,50,[153,50,204], 1.52, 1.52, 500, 600);
+			  fish8 = new Fish(100,50,[153,50,204], 1.72, 1.72, 200, 600);
+			  fish9 = new Fish(100,50,[153,50,204], 2.2, 2.2, 700, 500);
+			  rock = new Rock(100,0,550,[169,169,169]);
+			  rock1 = new Rock(100,100,550,[169,169,169]);
+			  rock2 = new Rock(100,200,550,[169,169,169]);
+			  rock3 = new Rock(100,300,550,[169,169,169]);
+			  rock4 = new Rock(100,400,550,[169,169,169]);
+			  rock5 = new Rock(100,500,550,[169,169,169]);
+			  rock6 = new Rock(100,600,550,[169,169,169]);
+			  rock7 = new Rock(100,700,550,[169,169,169]);
+			  rock8 = new Rock(100,800,550,[169,169,169]);
+			  size(800,600);
+			  background(100,149,237);
+			}
+
+			void draw(){  
+			  background(100,149,237);
+			  rock.drawRock();
+			  rock1.drawRock();
+			  rock2.drawRock();
+			  rock3.drawRock();
+			  rock4.drawRock();
+			  rock5.drawRock();
+			  rock6.drawRock();
+			  rock7.drawRock();
+			  rock8.drawRock();
+			  //create the fish
+			  fish.drawFish();
+			  fish1.drawFish();
+			  fish2.drawFish();
+			  fish3.drawFish();
+			  fish4.drawFish();
+			  fish5.drawFish();
+			  fish6.drawFish();
+			  fish7.drawFish();
+			  fish8.drawFish();
+			  fish9.drawFish();
+			  fish.move();
+			  fish1.move();
+			  fish2.move();
+			  fish3.move();
+			  fish4.move();
+			  fish5.move();
+			  fish6.move();
+			  fish7.move();
+			  fish8.move();
+			  fish9.move();
+			}
+			class Fish{
+				//attributes, constructor, functions
+				//-----ATTRIBUTES-----
+				var width;
+				var height;
+				var speedX;
+				var speedY;
+				var xPosition;
+				var yPosition;
+				var r;
+				var g;
+				var b;
+				//-----CONSTRUCTOR-----
+				Fish(w, h, color, xS, yS, x, y) {
+					width = w;
+					height= h;
+					r = color[0];
+					g = color[1];
+					b = color[2];
+					speedX = xS;
+					speedY = yS;
+					xPosition = x;
+					yPosition = y;
+				}
+				void drawFish() {
+					noStroke();
+					fill(r, g, b);
+					ellipse(xPosition, yPosition, width, height);
+					triangle((xPosition-(width/2)),(yPosition),(xPosition-width),(yPosition-(height/2)),(xPosition-(width)),(yPosition +(height/2)));
+				}
+				void move(){
+					xPosition = xPosition - speedX;
+					yPosition = yPosition - speedY;
+					
+					if ((xPosition < 0) || (xPosition > 800)) {
+						speedX = speedX * -1;
+					}
+					if ((yPosition < 0) || (yPosition > 600)) {
+						speedY = speedY * -1;
+					}
+				}
+			}
+			class Rock {
+				//-----ATTRIBUTES-----
+				var size;
+				var xPos;
+				var yPos;
+				var red;
+				var green;
+				var blue;
+				//-----CONSTRUCTOR-----
+				Rock(s, xP, yP, color){
+					size=s;
+					xPos=xP;
+					yPos=yP;
+					red=color[0];
+					green=color[1];
+					blue=color[2];
+				}
+				void drawRock(){
+					fill(red, green, blue);
+					ellipse(xPos,yPos,size,size);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
